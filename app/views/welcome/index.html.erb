@@ -1,0 +1,7 @@
+<center><h1>Test Sending Email</h1>
+<p><%=  flash[:message] if flash[:message].present? %></p>
+<%= form_tag(send_email_path, method: "post") do %>
+  <%= email_field(:user,:email) %>
+  <%= submit_tag("Send Email") %>
+<% end %>
+</center>
