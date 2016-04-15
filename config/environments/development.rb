@@ -13,8 +13,9 @@ Rails.application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
+  config.action_mailer.perform_deliveries = true
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -45,6 +46,13 @@ Rails.application.configure do
    :password             => "gmail_password",
    :authentication       => "plain",
    :enable_starttls_auto => true
+  }
+
+  Rails.application.config.middleware.use ExceptionNotification::Rack,
+    :email => {
+      :email_prefix => "[PREFIX] ",
+      :sender_address => %{"notifier" <something@example.com>},
+      :exception_recipients => %w{something@example.com}
   }
 
   # Raises error for missing translations
